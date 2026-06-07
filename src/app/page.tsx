@@ -46,20 +46,43 @@ const badgeVariant: Record<StatusLabel, "done" | "progress" | "waiting" | "data"
   Risk: "risk",
 };
 
+
+const statusLabels: Record<StatusLabel, string> = {
+  Done: "Готово",
+  "In Progress": "В работе",
+  Waiting: "Ожидание",
+  "Needs Data": "Нужны данные",
+  Draft: "Черновик",
+  Risk: "Риск",
+};
+
+const documentStatusLabels = {
+  Pending: "Ожидает",
+  "Shared on request": "По запросу",
+  "Placeholder only": "Placeholder",
+};
+
+const roadmapLabels: Record<string, string> = {
+  Backlog: "Бэклог",
+  "In Progress": "В работе",
+  Waiting: "Ожидание",
+  Done: "Готово",
+};
+
 const nav = [
-  ["Status", "#status"],
-  ["Location", "#location"],
-  ["Market", "#market"],
-  ["Economics", "#economics"],
-  ["Documents", "#documents"],
+  ["Статус", "#status"],
+  ["Локация", "#location"],
+  ["Рынок", "#market"],
+  ["Экономика", "#economics"],
+  ["Документы", "#documents"],
 ];
 
 function Section({ id, eyebrow, title, children }: { id: string; eyebrow: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <section id={id} className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mb-8 max-w-3xl">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-[#d9b98c]">{eyebrow}</p>
-        <h2 className="text-3xl font-semibold tracking-[-0.04em] text-[#fff8ed] sm:text-4xl lg:text-5xl">{title}</h2>
+        <h2 className="text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#fff8ed] sm:text-4xl lg:text-5xl">{title}</h2>
       </div>
       {children}
     </section>
@@ -77,9 +100,9 @@ export default function Home() {
   const scenarios = useMemo(
     () =>
       [
-        { name: "Conservative", conversion: 0.03 },
-        { name: "Base", conversion: 0.05 },
-        { name: "Optimistic", conversion: 0.08 },
+        { name: "Консервативный", conversion: 0.03 },
+        { name: "Базовый", conversion: 0.05 },
+        { name: "Оптимистичный", conversion: 0.08 },
       ].map((scenario) => {
         const dailyPassengers = annualFlow / operatingDays;
         const purchases = dailyPassengers * scenario.conversion;
@@ -111,28 +134,28 @@ export default function Home() {
         </div>
       </header>
 
-      <section id="overview" className="relative mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+      <section id="overview" className="relative mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8">
         <div className="absolute right-[-10rem] top-20 hidden h-96 w-96 rounded-full bg-[#d9b98c]/10 blur-3xl lg:block" />
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-          <Badge variant="dark" className="mb-6 border-[#d9b98c]/25 text-[#f3d7ad]"><Globe2 className="mr-2 h-3.5 w-3.5" /> Russia — China travel coffee hub</Badge>
-          <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] text-[#fff8ed] sm:text-6xl lg:text-7xl">
+          <Badge variant="dark" className="mb-6 border-[#d9b98c]/25 text-[#f3d7ad]"><Globe2 className="mr-2 h-3.5 w-3.5" /> Тревел-кофе хаб Россия — Китай</Badge>
+          <h1 className="max-w-4xl text-4xl font-semibold leading-[1] tracking-[-0.06em] text-[#fff8ed] sm:text-6xl lg:text-7xl">
             Surf Coffee Terminal Spot
           </h1>
-          <p className="mt-5 text-xl text-[#d9b98c]">Blagoveshchensk — Heihe Cableway Terminal</p>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-white/68 sm:text-lg">
-            Interactive project hub for evaluating the launch of a Surf Coffee compact terminal spot inside the international cableway terminal between Russia and China.
+          <p className="mt-5 text-xl text-[#d9b98c]">Терминал канатной дороги Благовещенск — Хэйхэ</p>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-white/68 sm:text-lg sm:leading-8">
+            Проектная страница для оценки открытия компактного Surf Coffee Terminal Spot в международном пассажирском терминале маршрута Россия — Китай.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Button asChild size="lg"><a href="#status">View project status <ArrowRight className="h-4 w-4" /></a></Button>
-            <Button asChild size="lg" variant="secondary"><a href="#documents">Open documents</a></Button>
-            <Button asChild size="lg" variant="outline"><a href="#market">See market analysis</a></Button>
-            <Button asChild size="lg" variant="outline"><a href="#contacts">Contact project initiator</a></Button>
+            <Button asChild size="lg"><a href="#status">Смотреть статус проекта <ArrowRight className="h-4 w-4" /></a></Button>
+            <Button asChild size="lg" variant="secondary"><a href="#documents">Открыть документы</a></Button>
+            <Button asChild size="lg" variant="outline"><a href="#market">Смотреть анализ рынка</a></Button>
+            <Button asChild size="lg" variant="outline"><a href="#contacts">Связаться с инициатором</a></Button>
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.15 }} className="grid gap-4 sm:grid-cols-2">
           {heroCards.map((card) => (
             <Card key={card.label} className="bg-[#f7f1e8]/95">
-              <CardHeader className="p-5">
+              <CardHeader className="p-4 sm:p-5">
                 <CardDescription className="uppercase tracking-[0.2em]">{card.label}</CardDescription>
                 <CardTitle className="text-lg">{card.value}</CardTitle>
               </CardHeader>
@@ -141,14 +164,14 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <Section id="status" eyebrow="Project status" title="Execution dashboard for Surf Coffee, investors and landlord">
+      <Section id="status" eyebrow="Статус проекта" title="Рабочий dashboard для Surf Coffee, инвесторов и арендодателя">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {projectStatuses.map((item) => (
             <Card key={item.title}>
               <CardHeader>
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <CheckCircle2 className="h-5 w-5 text-[#a57945]" />
-                  <Badge variant={badgeVariant[item.status]}>{item.status}</Badge>
+                  <Badge variant={badgeVariant[item.status]}>{statusLabels[item.status]}</Badge>
                 </div>
                 <CardTitle className="text-lg">{item.title}</CardTitle>
               </CardHeader>
@@ -157,12 +180,12 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="location" eyebrow="Location logic" title="A terminal is not a street location">
+      <Section id="location" eyebrow="Логика локации" title="Терминал — это не уличная точка">
         <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <Card className="bg-[#fff8ed]">
             <CardHeader>
-              <CardDescription className="text-base leading-8">
-                The location is inside the international passenger terminal of the Blagoveshchensk — Heihe cableway. It creates a different consumption scenario: coffee before departure, coffee after arrival, waiting time, travel souvenir, visual content and grab-and-go convenience.
+              <CardDescription className="text-base leading-7 sm:leading-8">
+                Локация находится внутри международного терминала канатной дороги Благовещенск — Хэйхэ. Это не городская кофейня, а отдельный travel-сценарий: кофе перед отправлением, после прибытия, во время ожидания и как сувенир маршрута Россия — Китай.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-3">
@@ -183,17 +206,17 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="why" eyebrow="Brand fit" title="Why Surf Coffee belongs in the terminal scenario">
+      <Section id="why" eyebrow="Brand fit" title="Почему Surf Coffee подходит терминальному сценарию">
         <Card>
           <CardContent className="p-0">
-            <div className="grid border-b border-black/10 bg-white/45 p-5 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500 sm:grid-cols-2"><span>Surf Coffee DNA</span><span>Terminal fit</span></div>
-            {surfFit.map(([dna, fit]) => <div key={dna} className="grid gap-2 border-b border-black/10 p-5 last:border-b-0 sm:grid-cols-2"><strong>{dna}</strong><span className="text-neutral-600">{fit}</span></div>)}
+            <div className="grid border-b border-black/10 bg-white/45 p-5 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500 sm:grid-cols-2"><span>Surf Coffee DNA</span><span>Соответствие терминалу</span></div>
+            {surfFit.map(([dna, fit]) => <div key={dna} className="grid gap-2 border-b border-black/10 p-4 leading-6 last:border-b-0 sm:grid-cols-2 sm:p-5"><strong>{dna}</strong><span className="text-neutral-600">{fit}</span></div>)}
           </CardContent>
         </Card>
-        <p className="mt-6 rounded-[1.75rem] border border-[#d9b98c]/20 bg-[#d9b98c]/10 p-6 text-xl font-medium text-[#ffe2b8]">Surf Coffee can become the first coffee ritual of the Russia — China route.</p>
+        <p className="mt-6 rounded-[1.75rem] border border-[#d9b98c]/20 bg-[#d9b98c]/10 p-6 text-xl font-medium text-[#ffe2b8]">Surf Coffee может стать первым кофейным ритуалом маршрута Россия — Китай.</p>
       </Section>
 
-      <Section id="market" eyebrow="Market analysis" title="Blagoveshchensk has coffee culture, but not border travel coffee yet">
+      <Section id="market" eyebrow="Анализ рынка" title="В Благовещенске есть кофейная культура, но ещё нет border travel coffee">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {competitors.map((c) => (
             <Card key={c.name}>
@@ -202,60 +225,60 @@ export default function Home() {
                 <CardTitle>{c.name}</CardTitle>
                 <CardDescription>{c.format}</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 text-sm leading-6 text-neutral-700">
-                <p><strong>Price signal:</strong> {c.price}</p>
-                <p><strong>Insight:</strong> {c.insight}</p>
+              <CardContent className="space-y-3 text-sm leading-6 text-neutral-700">
+                <p><strong>Ценовой сигнал:</strong> {c.price}</p>
+                <p><strong>Вывод:</strong> {c.insight}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-        <Card className="mt-6 bg-[#fff8ed]"><CardHeader><CardTitle>Market conclusion</CardTitle><CardDescription className="text-base leading-8">Blagoveshchensk already has a developed coffee culture. However, all strong players operate in urban scenarios: shopping malls, streets, districts and “coffee nearby”. The niche of an international border travel coffee spot remains unoccupied.</CardDescription></CardHeader></Card>
+        <Card className="mt-6 bg-[#fff8ed]"><CardHeader><CardTitle>Вывод по рынку</CardTitle><CardDescription className="text-base leading-8">В Благовещенске уже сформирована кофейная культура. Но сильные игроки работают в городских сценариях: торговые центры, улицы, районы и «кофе рядом». Ниша международной пограничной travel-точки остаётся свободной.</CardDescription></CardHeader></Card>
       </Section>
 
-      <Section id="price" eyebrow="Price map" title="Signature drinks form a premium corridor">
+      <Section id="price" eyebrow="Карта цен" title="Авторские напитки формируют premium-коридор">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <Card className="overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-sm">
-                <thead className="bg-white/55 text-xs uppercase tracking-[0.2em] text-neutral-500"><tr>{["Player", "Cappuccino", "Latte", "Signature drinks", "Average check"].map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead>
+                <thead className="bg-white/55 text-xs uppercase tracking-[0.2em] text-neutral-500"><tr>{["Игрок", "Капучино", "Латте", "Авторские напитки", "Средний чек"].map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead>
                 <tbody>{priceMap.map((row) => <tr key={row.player} className="border-t border-black/10"><td className="p-4 font-semibold">{row.player}</td><td className="p-4">{row.cappuccino}</td><td className="p-4">{row.latte}</td><td className="p-4">{row.signature}</td><td className="p-4">{row.average}</td></tr>)}</tbody>
               </table>
             </div>
           </Card>
-          <Card><CardHeader><CardTitle>Signature drinks, ₽</CardTitle></CardHeader><CardContent className="h-80"><ResponsiveContainer width="100%" height="100%"><BarChart data={priceMap}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="player" tick={{ fontSize: 11 }} /><YAxis /><Tooltip /><Bar dataKey="signatureHigh" radius={[10, 10, 0, 0]}>{priceMap.map((_, i) => <Cell key={i} fill={["#a57945", "#c89b63", "#d9b98c", "#7c5b35"][i]} />)}</Bar></BarChart></ResponsiveContainer></CardContent></Card>
+          <Card><CardHeader><CardTitle>Авторские напитки, ₽</CardTitle></CardHeader><CardContent className="h-80"><ResponsiveContainer width="100%" height="100%"><BarChart data={priceMap}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="player" tick={{ fontSize: 11 }} /><YAxis /><Tooltip /><Bar dataKey="signatureHigh" radius={[10, 10, 0, 0]}>{priceMap.map((_, i) => <Cell key={i} fill={["#a57945", "#c89b63", "#d9b98c", "#7c5b35"][i]} />)}</Bar></BarChart></ResponsiveContainer></CardContent></Card>
         </div>
       </Section>
 
-      <Section id="economics" eyebrow="Scenario economics" title="Interactive revenue scenarios">
+      <Section id="economics" eyebrow="Экономика сценариев" title="Интерактивные сценарии выручки">
         <Card className="mb-6 bg-[#fff8ed]"><CardContent className="grid gap-4 p-6 md:grid-cols-2">
-          <label className="space-y-2 text-sm font-semibold">Annual passenger flow<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={annualFlow} onChange={(e) => setAnnualFlow(Number(e.target.value))} /></label>
-          <label className="space-y-2 text-sm font-semibold">Average check, ₽<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={averageCheck} onChange={(e) => setAverageCheck(Number(e.target.value))} /></label>
+          <label className="space-y-2 text-sm font-semibold">Годовой пассажиропоток<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={annualFlow} onChange={(e) => setAnnualFlow(Number(e.target.value))} /></label>
+          <label className="space-y-2 text-sm font-semibold">Средний чек, ₽<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={averageCheck} onChange={(e) => setAverageCheck(Number(e.target.value))} /></label>
         </CardContent></Card>
-        <Card className="overflow-hidden"><div className="overflow-x-auto"><table className="w-full min-w-[980px] text-left text-sm"><thead className="bg-white/55 text-xs uppercase tracking-[0.18em] text-neutral-500"><tr>{["Scenario", "Daily passengers", "Conversion", "Purchases/day", "Average check", "Daily revenue", "Monthly revenue", "Annual revenue"].map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead><tbody>{scenarios.map((s) => <tr key={s.name} className="border-t border-black/10"><td className="p-4 font-semibold">{s.name}</td><td className="p-4">{Math.round(s.dailyPassengers).toLocaleString("ru-RU")}</td><td className="p-4">{Math.round(s.conversion * 100)}%</td><td className="p-4">{Math.round(s.purchases).toLocaleString("ru-RU")}</td><td className="p-4"><Money value={s.averageCheck} /></td><td className="p-4"><Money value={s.dailyRevenue} /></td><td className="p-4"><Money value={s.monthlyRevenue} /></td><td className="p-4"><Money value={s.annualRevenue} /></td></tr>)}</tbody></table></div></Card>
-        <p className="mt-5 text-sm leading-6 text-white/55">Preliminary scenarios only. Actual results depend on traffic ramp-up, rent, CAPEX, operating hours, staffing, franchise terms and technical conditions.</p>
+        <Card className="overflow-hidden"><div className="overflow-x-auto"><table className="w-full min-w-[980px] text-left text-sm"><thead className="bg-white/55 text-xs uppercase tracking-[0.18em] text-neutral-500"><tr>{["Сценарий", "Пассажиров/день", "Конверсия", "Покупок/день", "Средний чек", "Выручка/день", "Выручка/месяц", "Выручка/год"].map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead><tbody>{scenarios.map((s) => <tr key={s.name} className="border-t border-black/10"><td className="p-4 font-semibold">{s.name}</td><td className="p-4">{Math.round(s.dailyPassengers).toLocaleString("ru-RU")}</td><td className="p-4">{Math.round(s.conversion * 100)}%</td><td className="p-4">{Math.round(s.purchases).toLocaleString("ru-RU")}</td><td className="p-4"><Money value={s.averageCheck} /></td><td className="p-4"><Money value={s.dailyRevenue} /></td><td className="p-4"><Money value={s.monthlyRevenue} /></td><td className="p-4"><Money value={s.annualRevenue} /></td></tr>)}</tbody></table></div></Card>
+        <p className="mt-5 text-sm leading-6 text-white/55">Сценарии предварительные. Фактические результаты зависят от роста трафика, аренды, CAPEX, часов работы, штата, условий франшизы и технических условий.</p>
       </Section>
 
-      <Section id="product" eyebrow="Product & China traffic" title="Fast, visual, bilingual and souvenir-ready">
+      <Section id="product" eyebrow="Продукт и China traffic" title="Быстро, визуально, двуязычно и готово к сувенирному спросу">
         <div className="grid gap-4 md:grid-cols-5">{productIdeas.map((idea, i) => <Card key={idea} className={cn("md:col-span-1", i === 2 && "md:col-span-2")}><CardHeader><Sparkles className="h-5 w-5 text-[#a57945]" /><CardTitle className="text-lg">{idea}</CardTitle></CardHeader></Card>)}</div>
       </Section>
 
-      <Section id="risks" eyebrow="Risk management" title="Known risks and mitigation logic">
-        <Card className="bg-[#fff8ed]"><CardContent className="p-6"><Accordion type="single" collapsible>{risks.map((item) => <AccordionItem key={item.risk} value={item.risk}><AccordionTrigger>Risk: {item.risk}</AccordionTrigger><AccordionContent><strong>Solution:</strong> {item.solution}</AccordionContent></AccordionItem>)}</Accordion></CardContent></Card>
+      <Section id="risks" eyebrow="Управление рисками" title="Известные риски и логика снижения">
+        <Card className="bg-[#fff8ed]"><CardContent className="p-4 sm:p-6"><Accordion type="single" collapsible>{risks.map((item) => <AccordionItem key={item.risk} value={item.risk}><AccordionTrigger>Риск: {item.risk}</AccordionTrigger><AccordionContent><strong>Решение:</strong> {item.solution}</AccordionContent></AccordionItem>)}</Accordion></CardContent></Card>
       </Section>
 
-      <Section id="documents" eyebrow="Data room" title="Project documents and working files">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{documents.map((doc) => <Card key={doc.title}><CardHeader><div className="flex items-center justify-between gap-3"><FileText className="h-5 w-5 text-[#a57945]" /><Badge variant={doc.status === "Pending" ? "waiting" : doc.status === "Shared on request" ? "data" : "draft"}>{doc.status}</Badge></div><CardTitle className="text-lg">{doc.title}</CardTitle><CardDescription>{doc.note}</CardDescription></CardHeader></Card>)}</div>
+      <Section id="documents" eyebrow="Data room" title="Проектные документы и рабочие файлы">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{documents.map((doc) => <Card key={doc.title}><CardHeader><div className="flex items-center justify-between gap-3"><FileText className="h-5 w-5 text-[#a57945]" /><Badge variant={doc.status === "Pending" ? "waiting" : doc.status === "Shared on request" ? "data" : "draft"}>{documentStatusLabels[doc.status]}</Badge></div><CardTitle className="text-lg">{doc.title}</CardTitle><CardDescription>{doc.note}</CardDescription></CardHeader></Card>)}</div>
       </Section>
 
-      <Section id="roadmap" eyebrow="Roadmap" title="Kanban board for the next project sprint">
-        <div className="grid gap-5 lg:grid-cols-4">{Object.entries(roadmap).map(([column, items]) => <Card key={column}><CardHeader><Badge variant={column === "Done" ? "done" : column === "In Progress" ? "progress" : column === "Waiting" ? "waiting" : "draft"}>{column}</Badge></CardHeader><CardContent className="space-y-3">{items.map((item) => <div key={item} className="rounded-2xl bg-white p-4 text-sm font-medium shadow-sm">{item}</div>)}</CardContent></Card>)}</div>
+      <Section id="roadmap" eyebrow="Roadmap" title="Kanban-доска следующего проектного спринта">
+        <div className="grid gap-5 lg:grid-cols-4">{Object.entries(roadmap).map(([column, items]) => <Card key={column}><CardHeader><Badge variant={column === "Done" ? "done" : column === "In Progress" ? "progress" : column === "Waiting" ? "waiting" : "draft"}>{roadmapLabels[column] ?? column}</Badge></CardHeader><CardContent className="space-y-3">{items.map((item) => <div key={item} className="rounded-2xl bg-white p-3 text-sm font-medium leading-6 shadow-sm sm:p-4">{item}</div>)}</CardContent></Card>)}</div>
       </Section>
 
-      <Section id="contacts" eyebrow="Contacts" title="Project initiator">
-        <Card className="bg-[#fff8ed]"><CardHeader><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><CardTitle className="text-3xl">Anton Patsura</CardTitle><CardDescription className="mt-3 text-base">Project initiator / marketing / restaurant projects / business development</CardDescription><p className="mt-5 max-w-3xl leading-8 text-neutral-700">Experience: restaurant and café projects, food service launch, brand strategy, passenger traffic locations, marketing and positioning.</p></div><div className="flex flex-wrap gap-3"><Button asChild><a href="https://t.me/" target="_blank"><MessageCircle className="h-4 w-4" />Telegram</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com"><Mail className="h-4 w-4" />Email</a></Button><Button asChild variant="ghost"><a href="https://wa.me/" target="_blank"><MessageCircle className="h-4 w-4" />WhatsApp</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com?subject=Surf%20Coffee%20Terminal%20Spot%20pitch%20deck%20request"><Download className="h-4 w-4" />Request pitch deck</a></Button></div></div></CardHeader></Card>
+      <Section id="contacts" eyebrow="Контакты" title="Инициатор проекта">
+        <Card className="bg-[#fff8ed]"><CardHeader><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><CardTitle className="text-3xl">Anton Patsura</CardTitle><CardDescription className="mt-3 text-base">Инициатор проекта / маркетинг / ресторанные проекты / развитие бизнеса</CardDescription><p className="mt-5 max-w-3xl leading-8 text-neutral-700">Опыт: ресторанные и кофейные проекты, запуск food service, бренд-стратегия, локации с пассажирским трафиком, маркетинг и позиционирование.</p></div><div className="flex flex-wrap gap-3"><Button asChild><a href="https://t.me/" target="_blank"><MessageCircle className="h-4 w-4" />Telegram</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com"><Mail className="h-4 w-4" />Email</a></Button><Button asChild variant="ghost"><a href="https://wa.me/" target="_blank"><MessageCircle className="h-4 w-4" />WhatsApp</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com?subject=Surf%20Coffee%20Terminal%20Spot%20pitch%20deck%20request"><Download className="h-4 w-4" />Запросить pitch deck</a></Button></div></div></CardHeader></Card>
       </Section>
 
-      <footer className="border-t border-white/10 px-4 py-10 text-center text-sm text-white/45"><Plane className="mx-auto mb-3 h-5 w-5 text-[#d9b98c]" />Surf Coffee Terminal Spot · Premium travel coffee dashboard · Placeholder-only data room</footer>
+      <footer className="border-t border-white/10 px-4 py-10 text-center text-sm text-white/45"><Plane className="mx-auto mb-3 h-5 w-5 text-[#d9b98c]" />Surf Coffee Terminal Spot · Premium travel coffee dashboard · Data room только с placeholder-данными</footer>
     </main>
   );
 }
