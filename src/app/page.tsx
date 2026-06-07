@@ -51,10 +51,10 @@ const badgeVariant: Record<StatusLabel, "done" | "progress" | "waiting" | "data"
 
 function Section({ id, eyebrow, title, children }: { id: string; eyebrow: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-      <div className="mb-8 max-w-3xl">
+    <section id={id} className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div className="mb-6 max-w-3xl sm:mb-8">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-[#d9b98c]">{eyebrow}</p>
-        <h2 className="text-3xl font-semibold tracking-[-0.04em] text-[#fff8ed] sm:text-4xl lg:text-5xl">{title}</h2>
+        <h2 className="text-[1.65rem] font-semibold leading-tight tracking-[-0.04em] text-[#fff8ed] sm:text-4xl lg:text-5xl">{title}</h2>
       </div>
       {children}
     </section>
@@ -102,15 +102,15 @@ export default function Home() {
         </div>
       </header>
 
-      <section id="overview" className="relative mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+      <section id="overview" className="relative mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
         <div className="absolute right-[-10rem] top-20 hidden h-96 w-96 rounded-full bg-[#d9b98c]/10 blur-3xl lg:block" />
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <Badge variant="dark" className="mb-6 border-[#d9b98c]/25 text-[#f3d7ad]"><Globe2 className="mr-2 h-3.5 w-3.5" /> {siteCopy.brandAccent}</Badge>
-          <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] text-[#fff8ed] sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl text-[2.65rem] font-semibold leading-[0.98] tracking-[-0.06em] text-[#fff8ed] sm:text-6xl sm:leading-[0.95] lg:text-7xl">
             {siteCopy.hero.title}
           </h1>
           <p className="mt-5 text-xl text-[#d9b98c]">{siteCopy.hero.subtitle}</p>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-white/68 sm:text-lg">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/68 sm:mt-6 sm:text-lg sm:leading-8">
             {siteCopy.hero.description}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -150,10 +150,10 @@ export default function Home() {
       </Section>
 
       <Section id="location" eyebrow={siteCopy.sections.location.eyebrow} title={siteCopy.sections.location.title}>
-        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid gap-5 sm:gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <Card className="bg-[#fff8ed]">
             <CardHeader>
-              <CardDescription className="text-base leading-8">
+              <CardDescription className="text-base leading-6 sm:leading-7">
                 {siteCopy.locationText}
               </CardDescription>
             </CardHeader>
@@ -161,14 +161,14 @@ export default function Home() {
               {locationSignals.map((signal) => <div key={signal} className="flex items-center gap-3 rounded-2xl bg-white p-4 text-sm font-medium"><MapPin className="h-4 w-4 text-[#a57945]" />{signal}</div>)}
             </CardContent>
           </Card>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
             {locationPlaceholders.map((placeholder) => (
               <div key={placeholder.title} className="glass-panel overflow-hidden rounded-[1.75rem]">
                 <div className="flex aspect-[4/3] flex-col items-center justify-center border-b border-white/10 bg-[linear-gradient(135deg,rgba(217,185,140,0.16),rgba(255,255,255,0.04))] p-8 text-center">
                   <span className="mb-3 rounded-full border border-[#d9b98c]/25 px-3 py-1 text-xs uppercase tracking-[0.25em] text-[#d9b98c]">{placeholder.label}</span>
                   <strong className="text-2xl font-semibold tracking-[-0.03em] text-[#fff8ed]">{placeholder.title}</strong>
                 </div>
-                <p className="p-5 text-sm leading-6 text-white/60">{placeholder.caption}</p>
+                <p className="p-4 text-sm leading-5 text-white/60 sm:p-5 sm:leading-6">{placeholder.caption}</p>
               </div>
             ))}
           </div>
@@ -182,7 +182,7 @@ export default function Home() {
             {surfFit.map(([dna, fit]) => <div key={dna} className="grid gap-2 border-b border-black/10 p-5 last:border-b-0 sm:grid-cols-2"><strong>{dna}</strong><span className="text-neutral-600">{fit}</span></div>)}
           </CardContent>
         </Card>
-        <p className="mt-6 rounded-[1.75rem] border border-[#d9b98c]/20 bg-[#d9b98c]/10 p-6 text-xl font-medium text-[#ffe2b8]">{siteCopy.surfCoffeeRitual}</p>
+        <p className="mt-5 rounded-[1.75rem] border border-[#d9b98c]/20 bg-[#d9b98c]/10 p-5 text-lg font-medium leading-7 text-[#ffe2b8] sm:mt-6 sm:p-6 sm:text-xl">{siteCopy.surfCoffeeRitual}</p>
       </Section>
 
       <Section id="market" eyebrow={siteCopy.sections.market.eyebrow} title={siteCopy.sections.market.title}>
@@ -194,18 +194,18 @@ export default function Home() {
                 <CardTitle>{c.name}</CardTitle>
                 <CardDescription>{c.format}</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 text-sm leading-6 text-neutral-700">
+              <CardContent className="space-y-3 text-sm leading-5 sm:leading-6 text-neutral-700">
                 <p><strong>{siteCopy.competitorLabels.priceSignal}:</strong> {c.price}</p>
                 <p><strong>{siteCopy.competitorLabels.insight}:</strong> {c.insight}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-        <Card className="mt-6 bg-[#fff8ed]"><CardHeader><CardTitle>{siteCopy.marketConclusionTitle}</CardTitle><CardDescription className="text-base leading-8">{siteCopy.marketConclusion}</CardDescription></CardHeader></Card>
+        <Card className="mt-5 bg-[#fff8ed] sm:mt-6"><CardHeader><CardTitle>{siteCopy.marketConclusionTitle}</CardTitle><CardDescription className="text-base leading-6 sm:leading-7">{siteCopy.marketConclusion}</CardDescription></CardHeader></Card>
       </Section>
 
       <Section id="price" eyebrow={siteCopy.sections.price.eyebrow} title={siteCopy.sections.price.title}>
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-5 sm:gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <Card className="overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-sm">
@@ -219,12 +219,12 @@ export default function Home() {
       </Section>
 
       <Section id="economics" eyebrow={siteCopy.sections.economics.eyebrow} title={siteCopy.sections.economics.title}>
-        <Card className="mb-6 bg-[#fff8ed]"><CardContent className="grid gap-4 p-6 md:grid-cols-2">
+        <Card className="mb-5 bg-[#fff8ed] sm:mb-6"><CardContent className="grid gap-4 p-5 sm:p-6 md:grid-cols-2">
           <label className="space-y-2 text-sm font-semibold">{tableLabels.annualFlow}<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={annualFlow} onChange={(e) => setAnnualFlow(Number(e.target.value))} /></label>
           <label className="space-y-2 text-sm font-semibold">{tableLabels.averageCheck}<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={averageCheck} onChange={(e) => setAverageCheck(Number(e.target.value))} /></label>
         </CardContent></Card>
         <Card className="overflow-hidden"><div className="overflow-x-auto"><table className="w-full min-w-[980px] text-left text-sm"><thead className="bg-white/55 text-xs uppercase tracking-[0.18em] text-neutral-500"><tr>{tableLabels.scenarioColumns.map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead><tbody>{scenarios.map((s) => <tr key={s.name} className="border-t border-black/10"><td className="p-4 font-semibold">{s.name}</td><td className="p-4">{Math.round(s.dailyPassengers).toLocaleString("ru-RU")}</td><td className="p-4">{Math.round(s.conversion * 100)}%</td><td className="p-4">{Math.round(s.purchases).toLocaleString("ru-RU")}</td><td className="p-4"><Money value={s.averageCheck} /></td><td className="p-4"><Money value={s.dailyRevenue} /></td><td className="p-4"><Money value={s.monthlyRevenue} /></td><td className="p-4"><Money value={s.annualRevenue} /></td></tr>)}</tbody></table></div></Card>
-        <p className="mt-5 text-sm leading-6 text-white/55">{siteCopy.economicsDisclaimer}</p>
+        <p className="mt-4 text-sm leading-5 text-white/55 sm:mt-5 sm:leading-6">{siteCopy.economicsDisclaimer}</p>
       </Section>
 
       <Section id="product" eyebrow={siteCopy.sections.product.eyebrow} title={siteCopy.sections.product.title}>
@@ -232,7 +232,7 @@ export default function Home() {
       </Section>
 
       <Section id="risks" eyebrow={siteCopy.sections.risks.eyebrow} title={siteCopy.sections.risks.title}>
-        <Card className="bg-[#fff8ed]"><CardContent className="p-6"><Accordion type="single" collapsible>{risks.map((item) => <AccordionItem key={item.risk} value={item.risk}><AccordionTrigger>{siteCopy.riskLabels.risk}: {item.risk}</AccordionTrigger><AccordionContent><strong>{siteCopy.riskLabels.solution}:</strong> {item.solution}</AccordionContent></AccordionItem>)}</Accordion></CardContent></Card>
+        <Card className="bg-[#fff8ed]"><CardContent className="p-5 sm:p-6"><Accordion type="single" collapsible>{risks.map((item) => <AccordionItem key={item.risk} value={item.risk}><AccordionTrigger>{siteCopy.riskLabels.risk}: {item.risk}</AccordionTrigger><AccordionContent><strong>{siteCopy.riskLabels.solution}:</strong> {item.solution}</AccordionContent></AccordionItem>)}</Accordion></CardContent></Card>
       </Section>
 
       <Section id="documents" eyebrow={siteCopy.sections.documents.eyebrow} title={siteCopy.sections.documents.title}>
@@ -244,10 +244,10 @@ export default function Home() {
       </Section>
 
       <Section id="contacts" eyebrow={siteCopy.sections.contacts.eyebrow} title={siteCopy.sections.contacts.title}>
-        <Card className="bg-[#fff8ed]"><CardHeader><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><CardTitle className="text-3xl">{siteCopy.contacts.name}</CardTitle><CardDescription className="mt-3 text-base">{siteCopy.contacts.role}</CardDescription><p className="mt-5 max-w-3xl leading-8 text-neutral-700">{siteCopy.contacts.experience}</p></div><div className="flex flex-wrap gap-3"><Button asChild><a href="https://t.me/" target="_blank"><MessageCircle className="h-4 w-4" />{siteCopy.contacts.buttons.telegram}</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com"><Mail className="h-4 w-4" />{siteCopy.contacts.buttons.email}</a></Button><Button asChild variant="ghost"><a href="https://wa.me/" target="_blank"><MessageCircle className="h-4 w-4" />{siteCopy.contacts.buttons.whatsapp}</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com?subject=Surf%20Coffee%20Terminal%20Spot%20pitch%20deck%20request"><Download className="h-4 w-4" />{siteCopy.contacts.buttons.pitch}</a></Button></div></div></CardHeader></Card>
+        <Card className="bg-[#fff8ed]"><CardHeader><div className="flex flex-col gap-5 sm:gap-6 lg:flex-row lg:items-end lg:justify-between"><div><CardTitle className="text-2xl sm:text-3xl">{siteCopy.contacts.name}</CardTitle><CardDescription className="mt-3 text-base">{siteCopy.contacts.role}</CardDescription><p className="mt-4 max-w-3xl leading-6 text-neutral-700 sm:mt-5 sm:leading-7">{siteCopy.contacts.experience}</p></div><div className="flex flex-wrap gap-3"><Button asChild><a href="https://t.me/" target="_blank"><MessageCircle className="h-4 w-4" />{siteCopy.contacts.buttons.telegram}</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com"><Mail className="h-4 w-4" />{siteCopy.contacts.buttons.email}</a></Button><Button asChild variant="ghost"><a href="https://wa.me/" target="_blank"><MessageCircle className="h-4 w-4" />{siteCopy.contacts.buttons.whatsapp}</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com?subject=Surf%20Coffee%20Terminal%20Spot%20pitch%20deck%20request"><Download className="h-4 w-4" />{siteCopy.contacts.buttons.pitch}</a></Button></div></div></CardHeader></Card>
       </Section>
 
-      <footer className="border-t border-white/10 px-4 py-10 text-center text-sm text-white/45"><Plane className="mx-auto mb-3 h-5 w-5 text-[#d9b98c]" />{siteCopy.footer}</footer>
+      <footer className="border-t border-white/10 px-4 py-8 text-center text-sm leading-6 text-white/45 sm:py-10"><Plane className="mx-auto mb-3 h-5 w-5 text-[#d9b98c]" />{siteCopy.footer}</footer>
     </main>
   );
 }

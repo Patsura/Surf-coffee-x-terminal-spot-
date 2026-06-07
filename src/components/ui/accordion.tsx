@@ -13,11 +13,11 @@ function AccordionItem({ children, className, value: _value, ...props }: React.H
 }
 
 function AccordionTrigger({ children, className }: React.HTMLAttributes<HTMLElement>) {
-  return <summary className={cn("flex cursor-pointer list-none items-center justify-between py-5 text-left text-sm font-semibold transition-all hover:text-[#a57945] [&::-webkit-details-marker]:hidden", className)}>{children}<ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" /></summary>;
+  return <summary className={cn("flex cursor-pointer list-none items-center justify-between py-4 text-left text-sm font-semibold transition-all hover:text-[#a57945] [&::-webkit-details-marker]:hidden", className)}>{children}<ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" /></summary>;
 }
 
 function AccordionContent({ children, className }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("pb-5 leading-6 text-neutral-600", className)}>{children}</div>;
+  return <div className={cn("pb-4 leading-5 sm:leading-6 text-neutral-600", className)}>{children}</div>;
 }
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
