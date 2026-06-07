@@ -37,8 +37,8 @@ import {
   risks,
   roadmap,
   surfFit,
-  surfValue,
   investorValue,
+  surfValue,
   type StatusLabel,
 } from "@/data/project";
 import { cn } from "@/lib/utils";
@@ -51,7 +51,6 @@ const badgeVariant: Record<StatusLabel, "done" | "progress" | "waiting" | "data"
   Draft: "draft",
   Risk: "risk",
 };
-
 
 const statusLabels: Record<StatusLabel, string> = {
   Done: "Готово",

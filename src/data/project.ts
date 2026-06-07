@@ -131,7 +131,6 @@ export const roadmap = {
   Done: ["Заявка на франшизу отправлена", "Ответ получен", "Pitch deck подготовлен", "Проектная документация изучена"],
 };
 
-
 export const heroBadges = [
   "Border Travel Coffee Spot",
   "Международный пассажирский терминал",
