@@ -14,7 +14,7 @@ import {
   Plane,
   Sparkles,
 } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -68,7 +68,12 @@ function Money({ value }: { value: number }) {
 export default function Home() {
   const [annualFlow, setAnnualFlow] = useState(2500000);
   const [averageCheck, setAverageCheck] = useState(550);
+  const [chartReady, setChartReady] = useState(false);
   const operatingDays = 365;
+
+  useEffect(() => {
+    setChartReady(true);
+  }, []);
   const scenarios = useMemo(
     () =>
       scenarioConfigs.map((scenario) => {
@@ -214,7 +219,7 @@ export default function Home() {
               </table>
             </div>
           </Card>
-          <Card><CardHeader><CardTitle>{tableLabels.chartTitle}</CardTitle></CardHeader><CardContent className="h-80"><ResponsiveContainer width="100%" height="100%" minWidth={0}><BarChart data={priceMap}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="player" tick={{ fontSize: 11 }} /><YAxis /><Tooltip /><Bar dataKey="signatureHigh" radius={[10, 10, 0, 0]}>{priceMap.map((_, i) => <Cell key={i} fill={["#a57945", "#c89b63", "#d9b98c", "#7c5b35"][i]} />)}</Bar></BarChart></ResponsiveContainer></CardContent></Card>
+          <Card><CardHeader><CardTitle>{tableLabels.chartTitle}</CardTitle></CardHeader><CardContent className="h-80">{chartReady ? <ResponsiveContainer width="100%" height="100%"><BarChart data={priceMap}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="player" tick={{ fontSize: 11 }} /><YAxis /><Tooltip /><Bar dataKey="signatureHigh" radius={[10, 10, 0, 0]}>{priceMap.map((_, i) => <Cell key={i} fill={["#a57945", "#c89b63", "#d9b98c", "#7c5b35"][i]} />)}</Bar></BarChart></ResponsiveContainer> : <div className="flex h-full items-center justify-center rounded-2xl bg-white/50 text-sm text-neutral-500">График загрузится в preview</div>}</CardContent></Card>
         </div>
       </Section>
 
