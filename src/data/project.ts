@@ -1,85 +1,84 @@
 export type StatusLabel = "Done" | "In Progress" | "Waiting" | "Needs Data" | "Draft" | "Risk";
 
 export const heroCards = [
-  { label: "Location", value: "International cableway terminal" },
-  { label: "Format", value: "Compact Terminal Spot" },
-  { label: "Status", value: "Franchise application submitted" },
-  { label: "Bar zone", value: "Provided by landlord, technical details pending" },
-  { label: "Market", value: "Coffee culture confirmed" },
-  { label: "Next step", value: "Validate compact terminal format with Surf Coffee" },
+  { label: "Маршрут", value: "Россия — Китай" },
+  { label: "Локация", value: "Международный пассажирский терминал" },
+  { label: "Формат", value: "Compact Terminal Format" },
+  { label: "Сценарий", value: "Кофе до отправления и после возвращения" },
+  { label: "Рынок", value: "Сформированная кофейная культура" },
+  { label: "Следующий шаг", value: "Согласование формата и условий" },
 ];
 
 export const projectStatuses: { title: string; status: StatusLabel }[] = [
-  { title: "Franchise application submitted", status: "Done" },
-  { title: "Response from Surf Coffee received", status: "Done" },
-  { title: "Pitch deck prepared", status: "Done" },
-  { title: "Local coffee market analysis", status: "In Progress" },
-  { title: "Project documentation received", status: "Done" },
-  { title: "Technical requirements", status: "Needs Data" },
-  { title: "Rental terms", status: "Waiting" },
-  { title: "Financial model", status: "Draft" },
-  { title: "Surf Coffee city approval", status: "Waiting" },
+  { title: "Заявка на франшизу отправлена", status: "Done" },
+  { title: "Ответ от Surf Coffee получен", status: "Done" },
+  { title: "Pitch deck подготовлен", status: "Done" },
+  { title: "Анализ локального кофейного рынка", status: "In Progress" },
+  { title: "Проектная документация получена", status: "Done" },
+  { title: "Технические требования", status: "Needs Data" },
+  { title: "Условия аренды", status: "Waiting" },
+  { title: "Финансовая модель", status: "Draft" },
+  { title: "Согласование города с Surf Coffee", status: "Waiting" },
 ];
 
 export const locationSignals = [
-  "Border route Russia — China",
-  "Passenger flow concentrated in one space",
-  "Waiting and transition scenario",
-  "Bar zone included in landlord’s project",
-  "Potential for first/last coffee of the route",
+  "Пограничный маршрут Россия — Китай",
+  "Пассажирский поток собран в одном пространстве",
+  "Сценарий ожидания и перехода",
+  "Барная зона включена в проект арендодателя",
+  "Потенциал первого и последнего кофе маршрута",
 ];
-
 
 export const locationPlaceholders = [
   {
-    title: "Page 6 floor fragment",
-    label: "Text placeholder",
-    caption: "Project documentation: fragment of 1st floor. Technical details require confirmation.",
+    title: "Фрагмент плана, стр. 6",
+    label: "Текстовый placeholder",
+    caption: "Проектная документация: фрагмент 1-го этажа. Технические детали требуют подтверждения.",
   },
   {
-    title: "Page 7 bar zone",
-    label: "Text placeholder",
-    caption: "Project documentation: bar zone. Technical details require confirmation.",
+    title: "Барная зона, стр. 7",
+    label: "Текстовый placeholder",
+    caption: "Проектная документация: барная зона. Технические детали требуют подтверждения.",
   },
 ];
 
 export const surfFit = [
-  ["Movement", "International route"],
-  ["Freedom", "Border crossing experience"],
-  ["Community spot", "Passenger meeting point"],
-  ["Music & visual culture", "Photogenic terminal environment"],
-  ["Merch & cups", "Travel souvenir"],
-  ["Specialty coffee", "Premium alternative to standard terminal coffee"],
+  ["Movement", "Международный маршрут"],
+  ["Freedom", "Опыт пересечения границы"],
+  ["Community spot", "Точка встречи пассажиров"],
+  ["Music & visual culture", "Фотогеничная среда терминала"],
+  ["Merch & cups", "Сувенир из поездки"],
+  ["Specialty coffee", "Премиальная альтернатива стандартному кофе в терминале"],
 ];
 
 export const competitors = [
   {
     name: "Stars Coffee",
-    role: "federal benchmark",
-    format: "coffee shop in shopping mall, food and drinks",
-    price: "cappuccino 295–355 ₽, latte 300–360 ₽, average check around 650 ₽",
-    insight: "confirms demand for federal coffee brand and 300–450 ₽ drinks",
+    role: "федеральный ориентир",
+    format: "кофейня в торговом центре, еда и напитки",
+    price: "капучино 295–355 ₽, латте 300–360 ₽, средний чек около 650 ₽",
+    insight: "market proof: федеральный бренд уже воспринимается аудиторией как понятный кофейный ориентир",
   },
   {
     name: "Чёрный лес",
-    role: "strong local network",
-    format: "coffee, breakfast, bakery, cozy neighborhood spots",
-    price: "cappuccino 150–200 ₽, signature drinks 230–260 ₽, average check around 500 ₽",
-    insight: "confirms daily coffee habit and local loyalty",
+    role: "сильная локальная сеть",
+    format: "кофе, завтраки, выпечка, уютные районные точки",
+    price: "капучино 150–200 ₽, авторские напитки 230–260 ₽, средний чек около 500 ₽",
+    insight: "market proof: локальная привычка к кофе и регулярным визитам уже сформирована",
   },
   {
     name: "Мэтч",
-    role: "modern local beverage brand",
-    format: "matcha, iced drinks, seasonal menu, Telegram loyalty",
-    price: "cappuccino 190 ₽, latte 250 ₽, seasonal drinks around 390 ₽, average check around 550 ₽",
-    insight: "confirms demand for visual drinks and young audience",
+    role: "современный beverage spot",
+    format: "матча, холодные напитки, сезонное меню, Telegram-лояльность",
+    price: "капучино 190 ₽, латте 250 ₽, сезонные напитки около 390 ₽, средний чек около 550 ₽",
+    insight: "market proof: есть спрос на визуальные напитки, сезонность и современную подачу",
   },
   {
     name: "Do.Bro Кофе",
-    role: "express coffee network",
-    format: "coffee to go, online ordering, app, bonuses, drips, beans",
-    price: "cappuccino 270–310 ₽, latte 280–320 ₽, signature drinks 390–435 ₽",
-    insight: "confirms convenience coffee and digital loyalty",
+    role: "coffee to go / digital convenience",
+    format: "кофе с собой, онлайн-заказы, приложение, бонусы, дрипы и зерно",
+    price: "капучино 270–310 ₽, латте 280–320 ₽, авторские напитки 390–435 ₽",
+    insight: "market proof: аудитория готова к coffee to go, онлайн-заказам и цифровой лояльности",
   },
 ];
 
@@ -91,43 +90,90 @@ export const priceMap = [
 ];
 
 export const productIdeas = [
-  "Bilingual menu RU/EN/CN",
-  "Fast visual navigation",
-  "Limited local line: Amur Latte, Border Matcha, Heihe Cold Brew, Cableway Lemonade",
-  "Merch as souvenir: stickers, cups, drips, pins",
-  "Social content potential for Xiaohongshu and WeChat",
+  "Двуязычное меню RU/EN/CN",
+  "Быстрая визуальная навигация",
+  "Локальная линейка: Amur Latte, Border Matcha, Heihe Cold Brew, Cableway Lemonade",
+  "Мерч как сувенир: стикеры, стаканы, дрипы, пины",
+  "Контент-потенциал для Xiaohongshu и WeChat",
 ];
 
 export const risks = [
-  { risk: "Service speed", solution: "Split flow into Grab & Go and Spot scenarios" },
-  { risk: "Traffic ramp-up", solution: "calculate conservative/base/optimistic scenarios" },
-  { risk: "CAPEX", solution: "compact terminal format and landlord-provided bar zone" },
-  { risk: "Engineering", solution: "validate water, sewage, electricity, storage, menu board, POS and equipment placement" },
-  { risk: "Franchise fit", solution: "request Surf Coffee compact terminal format validation" },
+  { risk: "Скорость обслуживания", solution: "разделить поток на Grab & Go и Spot-сценарии" },
+  { risk: "Постепенный рост трафика", solution: "рассчитать консервативный, базовый и оптимистичный сценарии" },
+  { risk: "CAPEX", solution: "использовать компактный терминальный формат и барную зону от арендодателя" },
+  { risk: "Инженерия", solution: "проверить воду, канализацию, электричество, склад, меню-борд, POS и размещение оборудования" },
+  { risk: "Соответствие франшизе", solution: "запросить у Surf Coffee валидацию компактного терминального формата" },
 ];
 
 export type DocumentStatus = "Pending" | "Shared on request" | "Placeholder only";
 
 export const documents: { title: string; status: DocumentStatus; note: string }[] = [
-  { title: "Pitch Deck PDF", status: "Shared on request", note: "Real PDF is excluded from Codex PR and will be uploaded manually later." },
-  { title: "Pitch Deck PPTX", status: "Shared on request", note: "Editable source deck is not stored in this public-safe repository." },
-  { title: "Project documentation PDF", status: "Shared on request", note: "Restricted landlord documentation is available only by request." },
-  { title: "Page 6 floor fragment", status: "Placeholder only", note: "Displayed as a text placeholder until the approved asset is uploaded." },
-  { title: "Page 7 bar zone", status: "Placeholder only", note: "Displayed as a text placeholder until the approved asset is uploaded." },
-  { title: "Competitor analysis", status: "Pending", note: "Final public-source validation is still in progress." },
-  { title: "Financial scenario sheet", status: "Pending", note: "Scenario model requires rent, CAPEX and operating assumptions." },
-  { title: "Questions for Surf Coffee", status: "Pending", note: "Question list will be prepared before franchise-team follow-up." },
-  { title: "Questions for landlord", status: "Pending", note: "Technical and rental checklist will be prepared for landlord review." },
+  { title: "Pitch Deck PDF", status: "Shared on request", note: "Реальный PDF исключён из Codex PR и будет загружен вручную позже." },
+  { title: "Pitch Deck PPTX", status: "Shared on request", note: "Редактируемый исходник презентации не хранится в публично-безопасном репозитории." },
+  { title: "Проектная документация PDF", status: "Shared on request", note: "Закрытая документация арендодателя доступна только по запросу." },
+  { title: "Фрагмент плана, стр. 6", status: "Placeholder only", note: "Показан текстовый placeholder до загрузки согласованного ассета." },
+  { title: "Барная зона, стр. 7", status: "Placeholder only", note: "Показан текстовый placeholder до загрузки согласованного ассета." },
+  { title: "Анализ конкурентов", status: "Pending", note: "Финальная проверка по открытым источникам ещё в работе." },
+  { title: "Финансовый сценарий", status: "Pending", note: "Модель требует условий аренды, CAPEX и операционных допущений." },
+  { title: "Вопросы для Surf Coffee", status: "Pending", note: "Список вопросов будет подготовлен перед следующим контактом с franchise-team." },
+  { title: "Вопросы для арендодателя", status: "Pending", note: "Технический и арендный checklist будет подготовлен для проверки." },
 ];
 
 export const roadmap = {
   Backlog: [
-    "Collect final competitor data",
-    "Prepare questions for franchise team",
-    "Prepare investor version of pitch",
-    "Prepare landlord technical checklist",
+    "Собрать финальные данные по конкурентам",
+    "Подготовить вопросы для franchise-team",
+    "Подготовить investor-версию pitch deck",
+    "Подготовить технический checklist для арендодателя",
   ],
-  "In Progress": ["Project website", "Market analysis update", "Financial model draft"],
-  Waiting: ["Surf Coffee city approval", "Rental terms", "Technical conditions from landlord"],
-  Done: ["Franchise application submitted", "Response received", "Pitch deck prepared", "Project documentation reviewed"],
+  "In Progress": ["Сайт проекта", "Обновление анализа рынка", "Черновик финансовой модели"],
+  Waiting: ["Согласование города с Surf Coffee", "Условия аренды", "Технические условия от арендодателя"],
+  Done: ["Заявка на франшизу отправлена", "Ответ получен", "Pitch deck подготовлен", "Проектная документация изучена"],
 };
+
+export const heroBadges = [
+  "Border Travel Coffee Spot",
+  "Международный пассажирский терминал",
+  "Россия — Китай",
+  "Compact Terminal Format",
+];
+
+export const guestScenarios = [
+  { title: "До отправления", text: "кофе с собой перед посадкой" },
+  { title: "После прибытия", text: "первая покупка в России / первая пауза после дороги" },
+  { title: "Ожидание", text: "напиток и быстрый перекус в терминале" },
+  { title: "Сувенир маршрута", text: "зерно, дрипы, мерч, стакан с travel-легендой" },
+];
+
+export const landlordValue = [
+  "Повышение качества пассажирского опыта",
+  "Понятный федеральный бренд вместо случайной кофейной точки",
+  "Дополнительная коммерческая активность в терминале",
+  "Визуально сильный объект внутри пространства",
+  "Формат, совместимый с быстрым пассажирским потоком",
+];
+
+export const surfValue = [
+  "Первая ассоциация бренда с маршрутом Россия — Китай",
+  "Нестандартная travel-локация",
+  "PR-потенциал открытия",
+  "Проверка компактного terminal format",
+  "Выход к аудитории туристов, предпринимателей, семей и транзитных гостей",
+];
+
+export const investorValue = [
+  "Компактный формат",
+  "Понятный продукт",
+  "Сильный брендовый якорь",
+  "Потенциал пассажирского трафика",
+  "Масштабируемая логика для travel-локаций",
+];
+
+export const readinessCards = [
+  "Локация определена",
+  "Барная зона предусмотрена проектом терминала",
+  "Формат компактной точки подходит под пассажирский сценарий",
+  "Анализ рынка собран",
+  "Заявка Surf Coffee отправлена",
+  "Следующий шаг: согласование формата и условий",
+];
