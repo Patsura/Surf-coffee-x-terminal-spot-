@@ -29,15 +29,15 @@ export const locationSignals = [
   "Потенциал первого и последнего кофе маршрута",
 ];
 
-export const locationPlaceholders = [
+export const locationMaterials = [
   {
     title: "Фрагмент плана, стр. 6",
-    label: "Текстовый placeholder",
+    label: "Материал по запросу",
     caption: "Проектная документация: фрагмент 1-го этажа. Технические детали требуют подтверждения.",
   },
   {
     title: "Барная зона, стр. 7",
-    label: "Текстовый placeholder",
+    label: "Материал по запросу",
     caption: "Проектная документация: барная зона. Технические детали требуют подтверждения.",
   },
 ];
@@ -105,18 +105,15 @@ export const risks = [
   { risk: "Соответствие франшизе", solution: "запросить у Surf Coffee валидацию компактного терминального формата" },
 ];
 
-export type DocumentStatus = "Pending" | "Shared on request" | "Placeholder only";
+export type DocumentStatus = "Pending" | "Shared on request" | "Available after alignment";
 
 export const documents: { title: string; status: DocumentStatus; note: string }[] = [
-  { title: "Pitch Deck PDF", status: "Shared on request", note: "Реальный PDF исключён из Codex PR и будет загружен вручную позже." },
-  { title: "Pitch Deck PPTX", status: "Shared on request", note: "Редактируемый исходник презентации не хранится в публично-безопасном репозитории." },
-  { title: "Проектная документация PDF", status: "Shared on request", note: "Закрытая документация арендодателя доступна только по запросу." },
-  { title: "Фрагмент плана, стр. 6", status: "Placeholder only", note: "Показан текстовый placeholder до загрузки согласованного ассета." },
-  { title: "Барная зона, стр. 7", status: "Placeholder only", note: "Показан текстовый placeholder до загрузки согласованного ассета." },
-  { title: "Анализ конкурентов", status: "Pending", note: "Финальная проверка по открытым источникам ещё в работе." },
-  { title: "Финансовый сценарий", status: "Pending", note: "Модель требует условий аренды, CAPEX и операционных допущений." },
-  { title: "Вопросы для Surf Coffee", status: "Pending", note: "Список вопросов будет подготовлен перед следующим контактом с franchise-team." },
-  { title: "Вопросы для арендодателя", status: "Pending", note: "Технический и арендный checklist будет подготовлен для проверки." },
+  { title: "Pitch Deck PDF", status: "Shared on request", note: "по запросу" },
+  { title: "Pitch Deck PPTX", status: "Shared on request", note: "по запросу" },
+  { title: "Проектная документация", status: "Shared on request", note: "по запросу" },
+  { title: "Фрагмент плана", status: "Available after alignment", note: "доступен после согласования" },
+  { title: "Барная зона", status: "Available after alignment", note: "доступна после согласования" },
+  { title: "Финансовая модель", status: "Pending", note: "в подготовке" },
 ];
 
 export const roadmap = {

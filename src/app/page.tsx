@@ -9,276 +9,456 @@ import {
   FileText,
   Globe2,
   Mail,
-  MapPin,
   MessageCircle,
   Plane,
   Sparkles,
 } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
-import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import type { ReactNode } from "react";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  competitors,
-  documents,
-  heroCards,
-  locationPlaceholders,
-  locationSignals,
-  priceMap,
-  productIdeas,
-  projectStatuses,
-  risks,
-  roadmap,
-  surfFit,
-  type StatusLabel,
-} from "@/data/project";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { competitors, documents } from "@/data/project";
 import { cn } from "@/lib/utils";
 
-const badgeVariant: Record<StatusLabel, "done" | "progress" | "waiting" | "data" | "draft" | "risk"> = {
-  Done: "done",
-  "In Progress": "progress",
-  Waiting: "waiting",
-  "Needs Data": "data",
-  Draft: "draft",
-  Risk: "risk",
-};
-
-
-const statusLabels: Record<StatusLabel, string> = {
-  Done: "Готово",
-  "In Progress": "В работе",
-  Waiting: "Ожидание",
-  "Needs Data": "Нужны данные",
-  Draft: "Черновик",
-  Risk: "Риск",
-};
-
-const documentStatusLabels = {
-  Pending: "Ожидает",
-  "Shared on request": "По запросу",
-  "Placeholder only": "Placeholder",
-};
-
-const roadmapLabels: Record<string, string> = {
-  Backlog: "Бэклог",
-  "In Progress": "В работе",
-  Waiting: "Ожидание",
-  Done: "Готово",
-};
-
 const nav = [
-  ["Статус", "#status"],
+  ["Идея", "#overview"],
   ["Локация", "#location"],
-  ["Рынок", "#market"],
-  ["Экономика", "#economics"],
+  ["Концепция", "#concept"],
+  ["Стороны", "#stakeholders"],
   ["Документы", "#documents"],
 ];
 
-function Section({ id, eyebrow, title, children }: { id: string; eyebrow: string; title: string; children: ReactNode }) {
+const routeSteps = ["RU", "Terminal Spot", "CN"];
+
+const conceptPoints = [
+  "кофе с собой перед посадкой",
+  "напиток во время ожидания",
+  "первая покупка после прибытия",
+  "дрипы, зерно, стаканы и мерч как сувенир маршрута",
+  "RU/EN/CN навигация",
+  "локальная линейка напитков как гипотеза",
+];
+
+const brandFit = [
+  ["Movement", "международный маршрут"],
+  ["Freedom", "пересечение границы"],
+  ["Community", "точка встречи пассажиров"],
+  ["Visual culture", "фотогеничная среда терминала"],
+  ["Merch", "сувенирная логика"],
+  [
+    "Specialty coffee",
+    "премиальная альтернатива стандартному кофе в терминале",
+  ],
+];
+
+const stakeholderValue = [
+  {
+    title: "Арендодатель",
+    points: [
+      "премиальный сервис в пассажирском ядре",
+      "дополнительная причина задержаться в терминале",
+      "бренд, усиливающий международный образ объекта",
+    ],
+  },
+  {
+    title: "Surf Coffee",
+    points: [
+      "видимый travel-format на маршруте Россия — Китай",
+      "новый сценарий потребления бренда",
+      "контентная и мерч-логика без городской конкуренции",
+    ],
+  },
+  {
+    title: "Инвестор",
+    points: [
+      "компактный формат с понятной операционной гипотезой",
+      "проверяемая модель спроса",
+      "потенциал premium-чека и сувенирных продаж",
+    ],
+  },
+];
+
+const readinessDone = [
+  "локация определена",
+  "барная зона предусмотрена проектом терминала",
+  "проектная документация изучена",
+  "заявка Surf Coffee отправлена",
+  "анализ рынка собран",
+  "preliminary pitch подготовлен",
+];
+
+const readinessNext = [
+  "компактный формат с Surf Coffee",
+  "технические условия",
+  "аренду",
+  "CAPEX",
+  "операционную модель",
+  "финальную финансовую модель",
+];
+
+function Section({
+  id,
+  eyebrow,
+  title,
+  children,
+  className,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <section id={id} className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-      <div className="mb-8 max-w-3xl">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-[#d9b98c]">{eyebrow}</p>
-        <h2 className="text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#fff8ed] sm:text-4xl lg:text-5xl">{title}</h2>
+    <section
+      id={id}
+      className={cn(
+        "mx-auto w-full max-w-7xl px-4 py-9 sm:px-6 sm:py-14 lg:px-8 lg:py-18",
+        className,
+      )}
+    >
+      <div className="mb-6 max-w-3xl sm:mb-8">
+        <p className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-[#d9b98c] sm:text-xs sm:tracking-[0.35em]">
+          {eyebrow}
+        </p>
+        <h2 className="text-3xl font-semibold leading-tight tracking-[-0.05em] text-[#fff8ed] sm:text-4xl lg:text-5xl">
+          {title}
+        </h2>
       </div>
       {children}
     </section>
   );
 }
 
-function Money({ value }: { value: number }) {
-  return <>{new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(value)} ₽</>;
+function RouteDiagram({ compact = false }: { compact?: boolean }) {
+  return (
+    <div
+      className={cn("route-diagram", compact && "route-diagram-compact")}
+      aria-label="RU to Terminal Spot to CN"
+    >
+      {routeSteps.map((step, index) => (
+        <div
+          key={step}
+          className={cn("route-pill", index === 1 && "route-pill-center")}
+        >
+          {step}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default function Home() {
-  const [annualFlow, setAnnualFlow] = useState(2500000);
-  const [averageCheck, setAverageCheck] = useState(550);
-  const operatingDays = 365;
-  const scenarios = useMemo(
-    () =>
-      [
-        { name: "Консервативный", conversion: 0.03 },
-        { name: "Базовый", conversion: 0.05 },
-        { name: "Оптимистичный", conversion: 0.08 },
-      ].map((scenario) => {
-        const dailyPassengers = annualFlow / operatingDays;
-        const purchases = dailyPassengers * scenario.conversion;
-        const dailyRevenue = purchases * averageCheck;
-        return {
-          ...scenario,
-          dailyPassengers,
-          purchases,
-          averageCheck,
-          dailyRevenue,
-          monthlyRevenue: dailyRevenue * 30.4,
-          annualRevenue: dailyRevenue * operatingDays,
-        };
-      }),
-    [annualFlow, averageCheck],
-  );
-
   return (
     <main className="min-h-screen overflow-hidden">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#141413]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <a href="#overview" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#d9b98c] text-[#181715]"><Coffee className="h-5 w-5" /></span>
-            <span className="text-sm font-semibold uppercase tracking-[0.25em] text-[#fff8ed]">Terminal Spot</span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#d9b98c] text-[#181715]">
+              <Coffee className="h-5 w-5" />
+            </span>
+            <span className="text-sm font-semibold uppercase tracking-[0.25em] text-[#fff8ed]">
+              Terminal Spot
+            </span>
           </a>
           <nav className="hidden items-center gap-6 text-sm text-white/70 md:flex">
-            {nav.map(([label, href]) => <a key={href} className="transition hover:text-[#d9b98c]" href={href}>{label}</a>)}
+            {nav.map(([label, href]) => (
+              <a
+                key={href}
+                className="transition hover:text-[#d9b98c]"
+                href={href}
+              >
+                {label}
+              </a>
+            ))}
           </nav>
         </div>
       </header>
 
-      <section id="overview" className="relative mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8">
+      <section
+        id="overview"
+        className="relative mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 sm:px-6 sm:py-16 lg:min-h-[calc(92vh-73px)] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8"
+      >
         <div className="absolute right-[-10rem] top-20 hidden h-96 w-96 rounded-full bg-[#d9b98c]/10 blur-3xl lg:block" />
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-          <Badge variant="dark" className="mb-6 border-[#d9b98c]/25 text-[#f3d7ad]"><Globe2 className="mr-2 h-3.5 w-3.5" /> Тревел-кофе хаб Россия — Китай</Badge>
-          <h1 className="max-w-4xl text-4xl font-semibold leading-[1] tracking-[-0.06em] text-[#fff8ed] sm:text-6xl lg:text-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <Badge
+            variant="dark"
+            className="mb-5 border-[#d9b98c]/25 text-[#f3d7ad]"
+          >
+            <Globe2 className="mr-2 h-3.5 w-3.5" /> Кофейная точка на маршруте
+            Россия — Китай
+          </Badge>
+          <h1 className="max-w-4xl text-[3rem] font-semibold leading-[0.95] tracking-[-0.07em] text-[#fff8ed] sm:text-6xl lg:text-7xl">
             Surf Coffee Terminal Spot
           </h1>
-          <p className="mt-5 text-xl text-[#d9b98c]">Терминал канатной дороги Благовещенск — Хэйхэ</p>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-white/68 sm:text-lg sm:leading-8">
-            Проектная страница для оценки открытия компактного Surf Coffee Terminal Spot в международном пассажирском терминале маршрута Россия — Китай.
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
+            Терминал канатной дороги Благовещенск — Хэйхэ: кофе до отправления,
+            после прибытия и во время ожидания.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Button asChild size="lg"><a href="#status">Смотреть статус проекта <ArrowRight className="h-4 w-4" /></a></Button>
-            <Button asChild size="lg" variant="secondary"><a href="#documents">Открыть документы</a></Button>
-            <Button asChild size="lg" variant="outline"><a href="#market">Смотреть анализ рынка</a></Button>
-            <Button asChild size="lg" variant="outline"><a href="#contacts">Связаться с инициатором</a></Button>
+          <p className="mt-6 max-w-3xl rounded-[1.5rem] border border-[#d9b98c]/25 bg-[#d9b98c]/10 p-5 text-lg font-medium leading-8 text-[#ffe2b8]">
+            Это не кофейня под эскалатором. Это брендовая точка на международном
+            маршруте Россия — Китай.
+          </p>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Button asChild size="lg">
+              <a href="#concept">
+                Смотреть концепцию <ArrowRight className="h-4 w-4" />
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <a href="#documents">Материалы по запросу</a>
+            </Button>
+            <Button
+              asChild
+              className="hidden sm:inline-flex"
+              size="lg"
+              variant="outline"
+            >
+              <a href="#contacts">Связаться</a>
+            </Button>
           </div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.15 }} className="grid gap-4 sm:grid-cols-2">
-          {heroCards.map((card) => (
-            <Card key={card.label} className="bg-[#f7f1e8]/95">
-              <CardHeader className="p-4 sm:p-5">
-                <CardDescription className="uppercase tracking-[0.2em]">{card.label}</CardDescription>
-                <CardTitle className="text-lg">{card.value}</CardTitle>
-              </CardHeader>
-            </Card>
-          ))}
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="hero-terminal glass-panel rounded-[2rem] p-5 sm:p-7"
+        >
+          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-[#d9b98c]">
+            Premium terminal logic
+          </p>
+          <RouteDiagram />
+          <div className="mt-6 grid gap-3 text-sm leading-6 text-white/68 sm:grid-cols-3">
+            <span>До посадки</span>
+            <span>Ожидание</span>
+            <span>После прибытия</span>
+          </div>
         </motion.div>
       </section>
 
-      <Section id="status" eyebrow="Статус проекта" title="Рабочий dashboard для Surf Coffee, инвесторов и арендодателя">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projectStatuses.map((item) => (
-            <Card key={item.title}>
-              <CardHeader>
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[#a57945]" />
-                  <Badge variant={badgeVariant[item.status]}>{statusLabels[item.status]}</Badge>
-                </div>
-                <CardTitle className="text-lg">{item.title}</CardTitle>
-              </CardHeader>
-            </Card>
-          ))}
+      <Section
+        id="location"
+        eyebrow="Уникальность локации"
+        title="Терминальный формат работает не как городская кофейня"
+      >
+        <div className="story-block glass-panel rounded-[2rem] p-5 sm:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.85fr] lg:items-center">
+            <p className="text-2xl font-medium leading-9 tracking-[-0.04em] text-[#fff8ed] sm:text-3xl sm:leading-10">
+              Городские кофейни конкурируют за привычку. Терминальный формат
+              работает иначе: здесь кофе становится частью маршрута, ожидания,
+              встречи, возвращения и впечатления от поездки.
+            </p>
+            <div className="rounded-[1.5rem] border border-[#d9b98c]/20 bg-[#11100f]/70 p-4 sm:p-6">
+              <RouteDiagram compact />
+              <p className="mt-5 text-sm leading-6 text-white/60">
+                Маршрут превращает покупку кофе в travel-ритуал: быстро,
+                визуально, понятно на нескольких языках.
+              </p>
+            </div>
+          </div>
         </div>
       </Section>
 
-      <Section id="location" eyebrow="Логика локации" title="Терминал — это не уличная точка">
-        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+      <Section
+        id="concept"
+        eyebrow="Концепция точки"
+        title="Compact Terminal Spot: не витрина с кофе, а сервис маршрута"
+      >
+        <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
           <Card className="bg-[#fff8ed]">
-            <CardHeader>
-              <CardDescription className="text-base leading-7 sm:leading-8">
-                Локация находится внутри международного терминала канатной дороги Благовещенск — Хэйхэ. Это не городская кофейня, а отдельный travel-сценарий: кофе перед отправлением, после прибытия, во время ожидания и как сувенир маршрута Россия — Китай.
+            <CardHeader className="p-5 sm:p-6">
+              <CardDescription className="uppercase tracking-[0.22em]">
+                Format
+              </CardDescription>
+              <CardTitle className="text-2xl">Compact Terminal Spot</CardTitle>
+              <CardDescription className="text-base leading-7">
+                Малый формат с высокой ясностью предложения: кофе, ожидание,
+                прибытие, сувенир и навигация для международного пассажира.
               </CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-3">
-              {locationSignals.map((signal) => <div key={signal} className="flex items-center gap-3 rounded-2xl bg-white p-4 text-sm font-medium"><MapPin className="h-4 w-4 text-[#a57945]" />{signal}</div>)}
-            </CardContent>
           </Card>
-          <div className="grid gap-6 md:grid-cols-2">
-            {locationPlaceholders.map((placeholder) => (
-              <div key={placeholder.title} className="glass-panel overflow-hidden rounded-[1.75rem]">
-                <div className="flex aspect-[4/3] flex-col items-center justify-center border-b border-white/10 bg-[linear-gradient(135deg,rgba(217,185,140,0.16),rgba(255,255,255,0.04))] p-8 text-center">
-                  <span className="mb-3 rounded-full border border-[#d9b98c]/25 px-3 py-1 text-xs uppercase tracking-[0.25em] text-[#d9b98c]">{placeholder.label}</span>
-                  <strong className="text-2xl font-semibold tracking-[-0.03em] text-[#fff8ed]">{placeholder.title}</strong>
-                </div>
-                <p className="p-5 text-sm leading-6 text-white/60">{placeholder.caption}</p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {conceptPoints.map((point) => (
+              <div key={point} className="compact-row">
+                <Sparkles className="h-4 w-4 shrink-0 text-[#d9b98c]" />
+                <span>{point}</span>
               </div>
             ))}
           </div>
         </div>
       </Section>
 
-      <Section id="why" eyebrow="Brand fit" title="Почему Surf Coffee подходит терминальному сценарию">
-        <Card>
-          <CardContent className="p-0">
-            <div className="grid border-b border-black/10 bg-white/45 p-5 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500 sm:grid-cols-2"><span>Surf Coffee DNA</span><span>Соответствие терминалу</span></div>
-            {surfFit.map(([dna, fit]) => <div key={dna} className="grid gap-2 border-b border-black/10 p-4 leading-6 last:border-b-0 sm:grid-cols-2 sm:p-5"><strong>{dna}</strong><span className="text-neutral-600">{fit}</span></div>)}
-          </CardContent>
-        </Card>
-        <p className="mt-6 rounded-[1.75rem] border border-[#d9b98c]/20 bg-[#d9b98c]/10 p-6 text-xl font-medium text-[#ffe2b8]">Surf Coffee может стать первым кофейным ритуалом маршрута Россия — Китай.</p>
+      <Section
+        id="brand"
+        eyebrow="Почему Surf Coffee"
+        title="Brand fit matrix: ценности бренда уже совпадают с маршрутом"
+      >
+        <div className="matrix-panel overflow-hidden rounded-[2rem] border border-white/10">
+          {brandFit.map(([dna, fit]) => (
+            <div
+              key={dna}
+              className="grid gap-2 border-b border-white/10 p-4 last:border-b-0 sm:grid-cols-[0.45fr_1fr] sm:p-5"
+            >
+              <strong className="text-[#f3d7ad]">{dna}</strong>
+              <span className="text-white/68">{fit}</span>
+            </div>
+          ))}
+        </div>
       </Section>
 
-      <Section id="market" eyebrow="Анализ рынка" title="В Благовещенске есть кофейная культура, но ещё нет border travel coffee">
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {competitors.map((c) => (
-            <Card key={c.name}>
-              <CardHeader>
-                <Badge variant="outline">{c.role}</Badge>
-                <CardTitle>{c.name}</CardTitle>
-                <CardDescription>{c.format}</CardDescription>
+      <Section
+        id="stakeholders"
+        eyebrow="Value split"
+        title="Что получают арендодатель, Surf Coffee и инвестор"
+      >
+        <div className="grid gap-4 lg:grid-cols-3">
+          {stakeholderValue.map((column) => (
+            <Card key={column.title} className="bg-[#fff8ed]">
+              <CardHeader className="p-5">
+                <CardTitle className="text-xl">{column.title}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-sm leading-6 text-neutral-700">
-                <p><strong>Ценовой сигнал:</strong> {c.price}</p>
-                <p><strong>Вывод:</strong> {c.insight}</p>
+              <CardContent className="space-y-3 px-5 pb-5 pt-0">
+                {column.points.map((point) => (
+                  <div
+                    key={point}
+                    className="flex gap-3 text-sm leading-6 text-neutral-700"
+                  >
+                    <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#a57945]" />
+                    {point}
+                  </div>
+                ))}
               </CardContent>
             </Card>
           ))}
         </div>
-        <Card className="mt-6 bg-[#fff8ed]"><CardHeader><CardTitle>Вывод по рынку</CardTitle><CardDescription className="text-base leading-8">В Благовещенске уже сформирована кофейная культура. Но сильные игроки работают в городских сценариях: торговые центры, улицы, районы и «кофе рядом». Ниша международной пограничной travel-точки остаётся свободной.</CardDescription></CardHeader></Card>
       </Section>
 
-      <Section id="price" eyebrow="Карта цен" title="Авторские напитки формируют premium-коридор">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[720px] text-left text-sm">
-                <thead className="bg-white/55 text-xs uppercase tracking-[0.2em] text-neutral-500"><tr>{["Игрок", "Капучино", "Латте", "Авторские напитки", "Средний чек"].map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead>
-                <tbody>{priceMap.map((row) => <tr key={row.player} className="border-t border-black/10"><td className="p-4 font-semibold">{row.player}</td><td className="p-4">{row.cappuccino}</td><td className="p-4">{row.latte}</td><td className="p-4">{row.signature}</td><td className="p-4">{row.average}</td></tr>)}</tbody>
-              </table>
+      <Section
+        id="market"
+        eyebrow="Market proof"
+        title="Конкуренты доказывают спрос, но не закрывают travel coffee niche"
+      >
+        <div className="grid gap-3 md:grid-cols-2">
+          {competitors.map((c) => (
+            <div key={c.name} className="proof-row">
+              <div>
+                <strong>{c.name}</strong>
+                <p>{c.role}</p>
+              </div>
+              <span>{c.format}</span>
             </div>
-          </Card>
-          <Card><CardHeader><CardTitle>Авторские напитки, ₽</CardTitle></CardHeader><CardContent className="h-80"><ResponsiveContainer width="100%" height="100%"><BarChart data={priceMap}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="player" tick={{ fontSize: 11 }} /><YAxis /><Tooltip /><Bar dataKey="signatureHigh" radius={[10, 10, 0, 0]}>{priceMap.map((_, i) => <Cell key={i} fill={["#a57945", "#c89b63", "#d9b98c", "#7c5b35"][i]} />)}</Bar></BarChart></ResponsiveContainer></CardContent></Card>
+          ))}
+        </div>
+        <p className="mt-5 rounded-[1.5rem] border border-[#d9b98c]/20 bg-[#d9b98c]/10 p-5 text-lg font-medium leading-8 text-[#ffe2b8]">
+          В Благовещенске уже сформирована кофейная культура, но ниша
+          международного travel coffee spot остаётся свободной.
+        </p>
+      </Section>
+
+      <Section
+        id="readiness"
+        eyebrow="Project readiness"
+        title="Проект готов к деловому согласованию следующего уровня"
+      >
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="timeline-panel">
+            <Badge variant="done">Уже есть</Badge>
+            {readinessDone.map((item) => (
+              <div key={item} className="timeline-row">
+                <CheckCircle2 className="h-4 w-4 text-[#d9b98c]" />
+                {item}
+              </div>
+            ))}
+          </div>
+          <div className="timeline-panel">
+            <Badge variant="waiting">Нужно согласовать</Badge>
+            {readinessNext.map((item) => (
+              <div key={item} className="timeline-row">
+                <ArrowRight className="h-4 w-4 text-[#d9b98c]" />
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
       </Section>
 
-      <Section id="economics" eyebrow="Экономика сценариев" title="Интерактивные сценарии выручки">
-        <Card className="mb-6 bg-[#fff8ed]"><CardContent className="grid gap-4 p-6 md:grid-cols-2">
-          <label className="space-y-2 text-sm font-semibold">Годовой пассажиропоток<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={annualFlow} onChange={(e) => setAnnualFlow(Number(e.target.value))} /></label>
-          <label className="space-y-2 text-sm font-semibold">Средний чек, ₽<input className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" type="number" value={averageCheck} onChange={(e) => setAverageCheck(Number(e.target.value))} /></label>
-        </CardContent></Card>
-        <Card className="overflow-hidden"><div className="overflow-x-auto"><table className="w-full min-w-[980px] text-left text-sm"><thead className="bg-white/55 text-xs uppercase tracking-[0.18em] text-neutral-500"><tr>{["Сценарий", "Пассажиров/день", "Конверсия", "Покупок/день", "Средний чек", "Выручка/день", "Выручка/месяц", "Выручка/год"].map((h) => <th key={h} className="p-4">{h}</th>)}</tr></thead><tbody>{scenarios.map((s) => <tr key={s.name} className="border-t border-black/10"><td className="p-4 font-semibold">{s.name}</td><td className="p-4">{Math.round(s.dailyPassengers).toLocaleString("ru-RU")}</td><td className="p-4">{Math.round(s.conversion * 100)}%</td><td className="p-4">{Math.round(s.purchases).toLocaleString("ru-RU")}</td><td className="p-4"><Money value={s.averageCheck} /></td><td className="p-4"><Money value={s.dailyRevenue} /></td><td className="p-4"><Money value={s.monthlyRevenue} /></td><td className="p-4"><Money value={s.annualRevenue} /></td></tr>)}</tbody></table></div></Card>
-        <p className="mt-5 text-sm leading-6 text-white/55">Сценарии предварительные. Фактические результаты зависят от роста трафика, аренды, CAPEX, часов работы, штата, условий франшизы и технических условий.</p>
-      </Section>
-
-      <Section id="product" eyebrow="Продукт и China traffic" title="Быстро, визуально, двуязычно и готово к сувенирному спросу">
-        <div className="grid gap-4 md:grid-cols-5">{productIdeas.map((idea, i) => <Card key={idea} className={cn("md:col-span-1", i === 2 && "md:col-span-2")}><CardHeader><Sparkles className="h-5 w-5 text-[#a57945]" /><CardTitle className="text-lg">{idea}</CardTitle></CardHeader></Card>)}</div>
-      </Section>
-
-      <Section id="risks" eyebrow="Управление рисками" title="Известные риски и логика снижения">
-        <Card className="bg-[#fff8ed]"><CardContent className="p-4 sm:p-6"><Accordion type="single" collapsible>{risks.map((item) => <AccordionItem key={item.risk} value={item.risk}><AccordionTrigger>Риск: {item.risk}</AccordionTrigger><AccordionContent><strong>Решение:</strong> {item.solution}</AccordionContent></AccordionItem>)}</Accordion></CardContent></Card>
-      </Section>
-
-      <Section id="documents" eyebrow="Data room" title="Проектные документы и рабочие файлы">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{documents.map((doc) => <Card key={doc.title}><CardHeader><div className="flex items-center justify-between gap-3"><FileText className="h-5 w-5 text-[#a57945]" /><Badge variant={doc.status === "Pending" ? "waiting" : doc.status === "Shared on request" ? "data" : "draft"}>{documentStatusLabels[doc.status]}</Badge></div><CardTitle className="text-lg">{doc.title}</CardTitle><CardDescription>{doc.note}</CardDescription></CardHeader></Card>)}</div>
-      </Section>
-
-      <Section id="roadmap" eyebrow="Roadmap" title="Kanban-доска следующего проектного спринта">
-        <div className="grid gap-5 lg:grid-cols-4">{Object.entries(roadmap).map(([column, items]) => <Card key={column}><CardHeader><Badge variant={column === "Done" ? "done" : column === "In Progress" ? "progress" : column === "Waiting" ? "waiting" : "draft"}>{roadmapLabels[column] ?? column}</Badge></CardHeader><CardContent className="space-y-3">{items.map((item) => <div key={item} className="rounded-2xl bg-white p-3 text-sm font-medium leading-6 shadow-sm sm:p-4">{item}</div>)}</CardContent></Card>)}</div>
+      <Section id="documents" eyebrow="Data room" title="Материалы по запросу">
+        <Card className="bg-[#fff8ed]">
+          <CardContent className="divide-y divide-black/10 p-0">
+            {documents.map((doc) => (
+              <div
+                key={doc.title}
+                className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
+              >
+                <div className="flex items-center gap-3">
+                  <FileText className="h-4 w-4 text-[#a57945]" />
+                  <strong>{doc.title}</strong>
+                </div>
+                <span className="text-sm text-neutral-600">{doc.note}</span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </Section>
 
       <Section id="contacts" eyebrow="Контакты" title="Инициатор проекта">
-        <Card className="bg-[#fff8ed]"><CardHeader><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><CardTitle className="text-3xl">Anton Patsura</CardTitle><CardDescription className="mt-3 text-base">Инициатор проекта / маркетинг / ресторанные проекты / развитие бизнеса</CardDescription><p className="mt-5 max-w-3xl leading-8 text-neutral-700">Опыт: ресторанные и кофейные проекты, запуск food service, бренд-стратегия, локации с пассажирским трафиком, маркетинг и позиционирование.</p></div><div className="flex flex-wrap gap-3"><Button asChild><a href="https://t.me/" target="_blank"><MessageCircle className="h-4 w-4" />Telegram</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com"><Mail className="h-4 w-4" />Email</a></Button><Button asChild variant="ghost"><a href="https://wa.me/" target="_blank"><MessageCircle className="h-4 w-4" />WhatsApp</a></Button><Button asChild variant="ghost"><a href="mailto:hello@example.com?subject=Surf%20Coffee%20Terminal%20Spot%20pitch%20deck%20request"><Download className="h-4 w-4" />Запросить pitch deck</a></Button></div></div></CardHeader></Card>
+        <Card className="bg-[#fff8ed]">
+          <CardHeader>
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <CardTitle className="text-3xl">Anton Patsura</CardTitle>
+                <CardDescription className="mt-3 text-base">
+                  Инициатор проекта / маркетинг / ресторанные проекты / развитие
+                  бизнеса
+                </CardDescription>
+                <p className="mt-5 max-w-3xl leading-8 text-neutral-700">
+                  Опыт: ресторанные и кофейные проекты, запуск food service,
+                  бренд-стратегия, локации с пассажирским трафиком, маркетинг и
+                  позиционирование.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <a href="https://t.me/" target="_blank">
+                    <MessageCircle className="h-4 w-4" />
+                    Telegram
+                  </a>
+                </Button>
+                <Button asChild variant="ghost">
+                  <a href="mailto:hello@example.com">
+                    <Mail className="h-4 w-4" />
+                    Email
+                  </a>
+                </Button>
+                <Button asChild variant="ghost">
+                  <a href="mailto:hello@example.com?subject=Surf%20Coffee%20Terminal%20Spot%20pitch%20deck%20request">
+                    <Download className="h-4 w-4" />
+                    Запросить pitch deck
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+        </Card>
       </Section>
 
-      <footer className="border-t border-white/10 px-4 py-10 text-center text-sm text-white/45"><Plane className="mx-auto mb-3 h-5 w-5 text-[#d9b98c]" />Surf Coffee Terminal Spot · Premium travel coffee dashboard · Data room только с placeholder-данными</footer>
+      <footer className="border-t border-white/10 px-4 py-10 text-center text-sm text-white/45">
+        <Plane className="mx-auto mb-3 h-5 w-5 text-[#d9b98c]" />
+        Surf Coffee Terminal Spot · Premium investment one-pager · Материалы по
+        запросу
+      </footer>
     </main>
   );
 }
