@@ -5,24 +5,154 @@
   --foreground: #f7f1e8;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 20% 0%, rgba(217, 185, 140, 0.18), transparent 30rem),
-    radial-gradient(circle at 90% 20%, rgba(154, 113, 68, 0.16), transparent 28rem),
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(217, 185, 140, 0.18),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(154, 113, 68, 0.16),
+      transparent 28rem
+    ),
     linear-gradient(135deg, #121211 0%, #1d1c1a 48%, #0f1111 100%);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-a { color: inherit; text-decoration: none; }
-::selection { background: #d9b98c; color: #181715; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+::selection {
+  background: #d9b98c;
+  color: #181715;
+}
 
 .glass-panel {
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.06);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(18px);
+}
+
+.terminal-route {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(217, 185, 140, 0.18),
+      transparent 18rem
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(217, 185, 140, 0.08)
+    );
+}
+
+.terminal-route::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(217, 185, 140, 0.16),
+    transparent
+  );
+  transform: translateX(-70%);
+}
+
+.route-line {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.route-line::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(217, 185, 140, 0.25),
+    #d9b98c,
+    rgba(217, 185, 140, 0.25)
+  );
+}
+
+.route-node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(217, 185, 140, 0.22);
+  border-radius: 999px;
+  background: rgba(20, 20, 19, 0.72);
+  color: #fff8ed;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.route-node-center {
+  min-height: 5.4rem;
+  border-color: rgba(217, 185, 140, 0.62);
+  background: linear-gradient(
+    135deg,
+    rgba(217, 185, 140, 0.92),
+    rgba(165, 121, 69, 0.9)
+  );
+  color: #181715;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 640px) {
+  .pitch-light-card {
+    border-radius: 1.45rem;
+  }
+
+  .pitch-list-card {
+    border-radius: 1.25rem;
+    background: rgba(247, 241, 232, 0.96);
+  }
+
+  .route-line {
+    gap: 0.35rem;
+  }
+
+  .route-node {
+    min-height: 3.7rem;
+    padding: 0 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .route-node-center {
+    min-height: 4.3rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
 }
